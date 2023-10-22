@@ -49,6 +49,7 @@ public class DZ1Rostelecom {
         int count = 0;
         float sum = 0;
         // Используем группировку данных по классам, поскольку необходимо просматривать только старшие классы
+        // Доступ к списку учеников 10, 11 или 12 классов, осуществляется за O(1)
         for (int groupNumber = 10; groupNumber <= 12; groupNumber++) {
             personsByClass.getPersons(groupNumber);
             for (Person person : personsByClass.getPersons(groupNumber)) {
@@ -63,6 +64,7 @@ public class DZ1Rostelecom {
         System.out.println("Задание 2: Поиск всех отличников, старше 14 лет");
         ArrayList<String> honorslist = new ArrayList();
         // Используем группировку данных по возрасту, поскольку необходимо просматривать только учеников старше 14 лет
+        // Доступ к списку учеников одного возраста, осуществляется за O(1)
         for (int age = 14; age <= 18; age++) {
             personsByAge.getPersons(age);
             for (Person person : personsByAge.getPersons(age)) {
@@ -83,7 +85,8 @@ public class DZ1Rostelecom {
 
         System.out.println("Задание 3: Поиск учеников по фамилии");
         ArrayList<String> personsBySurnameList = new ArrayList();
-        // Используем группировку данных по прервой букве фамилии, поскольку необходимо просматривать конкретную фамилию
+        // Используем группировку данных по первой букве фамилии, поскольку необходимо просматривать конкретную фамилию
+        // Доступ к списку учеников с одинаковой первой буквой в фамилии, осуществляется за O(1)
         if (args.length > 0) {
             String Surname = args[0];
             String firstLetter = Surname.substring(0, 1);
