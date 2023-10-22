@@ -34,12 +34,7 @@ public class PersonNameDataGroup {
 
     // возвращает студентов конкретной группы
     public Person[] getPersons(String firstLetter) {
-        try {
             int firstLetterCode = (int) firstLetter.charAt(0) - 1040;
             return baskets[firstLetterCode].toArray(new Person[baskets[firstLetterCode].size()]);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Ошибка: Неизвестный символ");
-        }
-        return null;
     }
 }

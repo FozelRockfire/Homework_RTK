@@ -13,7 +13,7 @@ import java.util.Arrays;
  *
  * @author Ilya Popov
  */
-public class DZ1Onotation {
+public class DZ1Rostelecom {
 
     private static void fillTables(String filePath, PersonClassroomDataGroups personsByClass, PersonAgeDataGroups personsByAge, PersonNameDataGroup personsBySurname) {
         try {
@@ -42,8 +42,8 @@ public class DZ1Onotation {
         PersonAgeDataGroups personsByAge = new PersonAgeDataGroups();
         PersonNameDataGroup personsBySurname = new PersonNameDataGroup();
 
-        DZ1Onotation.fillTables("students.csv", personsByClass, personsByAge, personsBySurname);
-
+        DZ1Rostelecom.fillTables("students.csv", personsByClass, personsByAge, personsBySurname);
+        //Во всех заданиях выбираем тот 
         System.out.println("Задание 1: Вычисление средней оценки в старших классах (10, 11, 12)");
         int count = 0;
         float sum = 0;
@@ -51,15 +51,14 @@ public class DZ1Onotation {
         for (int groupNumber = 10; groupNumber <= 12; groupNumber++) {
             personsByClass.getPersons(groupNumber);
             for (Person person : personsByClass.getPersons(groupNumber)) {
-                for (int i=0; i < person.getGradeList().length; i++) {
+                for (int i = 0; i < person.getGradeList().length; i++) {
                     sum += person.getGradeList()[i];
                     count++;
                 }
             }
         }
         System.out.println(sum + " " + count);
-        System.out.println("Средний балл учеников старших классов: " + (sum/(count)));
-            
+        System.out.println("Средний балл учеников старших классов: " + (sum / (count)));
 
         System.out.println("Задание 2: Поиск всех отличников, старше 14 лет");
         ArrayList<String> honorslist = new ArrayList();
@@ -76,25 +75,35 @@ public class DZ1Onotation {
                 }
             }
         }
-        if (!honorslist.isEmpty())
+        if (!honorslist.isEmpty()) {
             System.out.println("Список отличников старше 14 лет:" + Arrays.toString(honorslist.toArray()));
-        else
+        } else {
             System.out.println("Отличников старше 14 лет не найдены");
-        
+        }
 
         System.out.println("Задание 3: Поиск ученика по фамилии");
         ArrayList<String> personsBySurnameList = new ArrayList();
         // Используем группировку данных по прервой букве фамилии, поскольку необходимо просматривать конкретную фамилию
-        String Surname = args[0];
-        String firstLetter = Surname.substring(0, 1);
-        for (Person person : personsBySurname.getPersons(firstLetter)) {
-            if (person.getSurname().equals(Surname)) {
-                personsBySurnameList.add(person.getSurname() + " " + person.getName());
+        if (args.length > 0) {
+            String Surname = args[0];
+            String firstLetter = Surname.substring(0, 1);
+            try {
+            for (Person person : personsBySurname.getPersons(firstLetter)) {
+                if (person.getSurname().equals(Surname)) {
+                    personsBySurnameList.add(person.getSurname() + " " + person.getName());
+                }
             }
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Ошибка: Неизвестный символ");
+            }
+            if (!personsBySurnameList.isEmpty()) {
+                System.out.println("Список учеников с фамилией " + Surname + " " + Arrays.toString(personsBySurnameList.toArray()));
+            } else {
+                System.out.println("Ученики с фамилией " + Surname + " не найдены");
+            }
+        } else {
+            System.out.println("Для поиска учеников по фамилии необходимо указать первым аргументов фамилию ученика");
         }
-        if (!personsBySurnameList.isEmpty())
-            System.out.println("Список учеников с фамилией" + Surname + " " + Arrays.toString(personsBySurnameList.toArray()));
-        else
-            System.out.println("Ученики с фамилией " + Surname + " не найдены");
+        
     }
 }
