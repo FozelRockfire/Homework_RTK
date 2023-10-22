@@ -10,7 +10,7 @@ import java.util.LinkedList;
  *
  * @author Ilya Popov
  */
-class PersonClassroomDataGroups {
+class PersonClassroomDataGroups implements DataGroups{
     int TOTAL_BASKETS = 12;
 
     private LinkedList<Person>[] baskets = new LinkedList[TOTAL_BASKETS];
@@ -21,13 +21,14 @@ class PersonClassroomDataGroups {
         }
     }
 
-    // алгоритм добавления студента в нужную группу согласно критерию
+    // Добавление студента в нужную корзину согласно номеру группы
     public void addPerson(Person person) {
         baskets[person.getGroup() - 1].add(person);
     }
 
-    // возвращает студентов конкретной группы
-    public Person[] getPersons(int groupNum) {
+    // возвращает всех студентов с одиноковым номером группы
+    public Person[] getPersons(Object param) {
+        int groupNum = (int) param;
         return baskets[groupNum - 1].toArray(new Person[baskets[groupNum - 1].size()]);
     }
 }

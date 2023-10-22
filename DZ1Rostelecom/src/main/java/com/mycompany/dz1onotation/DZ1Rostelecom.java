@@ -15,7 +15,7 @@ import java.util.Arrays;
  */
 public class DZ1Rostelecom {
 
-    private static void fillTables(String filePath, PersonClassroomDataGroups personsByClass, PersonAgeDataGroups personsByAge, PersonNameDataGroup personsBySurname) {
+    private static void fillTables(String filePath, ArrayList<? extends DataGroups> groups) {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filePath));
             String line;
@@ -27,9 +27,9 @@ public class DZ1Rostelecom {
                     grades[i - 4] = Integer.parseInt(params[i]);
                 }
                 Person person = new Person(params[0], params[1], Integer.parseInt(params[2]), Integer.parseInt(params[3]), grades);
-                personsByClass.addPerson(person);
-                personsByAge.addPerson(person);
-                personsBySurname.addPerson(person);
+                for (DataGroups group : groups) {
+                    group.addPerson(person);
+                }
             }
             reader.close();
         } catch (IOException e) {
@@ -41,9 +41,10 @@ public class DZ1Rostelecom {
         PersonClassroomDataGroups personsByClass = new PersonClassroomDataGroups();
         PersonAgeDataGroups personsByAge = new PersonAgeDataGroups();
         PersonNameDataGroup personsBySurname = new PersonNameDataGroup();
-
-        DZ1Rostelecom.fillTables("students.csv", personsByClass, personsByAge, personsBySurname);
-        //Во всех заданиях выбираем тот 
+        ArrayList<DataGroups> groupList = new ArrayList<>(Arrays.asList(personsByClass, personsByAge, personsBySurname));
+        
+        DZ1Rostelecom.fillTables("students.csv", groupList);
+        //Во всех заданиях выбираем ту структуру, в которой будет производится наименьшее количество операций
         System.out.println("Задание 1: Вычисление средней оценки в старших классах (10, 11, 12)");
         int count = 0;
         float sum = 0;
@@ -57,8 +58,7 @@ public class DZ1Rostelecom {
                 }
             }
         }
-        System.out.println(sum + " " + count);
-        System.out.println("Средний балл учеников старших классов: " + (sum / (count)));
+        System.out.println("Средний балл всех учеников старших классов по всем оценкам: " + (sum / (count)));
 
         System.out.println("Задание 2: Поиск всех отличников, старше 14 лет");
         ArrayList<String> honorslist = new ArrayList();
@@ -81,18 +81,18 @@ public class DZ1Rostelecom {
             System.out.println("Отличников старше 14 лет не найдены");
         }
 
-        System.out.println("Задание 3: Поиск ученика по фамилии");
+        System.out.println("Задание 3: Поиск учеников по фамилии");
         ArrayList<String> personsBySurnameList = new ArrayList();
         // Используем группировку данных по прервой букве фамилии, поскольку необходимо просматривать конкретную фамилию
         if (args.length > 0) {
             String Surname = args[0];
             String firstLetter = Surname.substring(0, 1);
             try {
-            for (Person person : personsBySurname.getPersons(firstLetter)) {
-                if (person.getSurname().equals(Surname)) {
-                    personsBySurnameList.add(person.getSurname() + " " + person.getName());
+                for (Person person : personsBySurname.getPersons(firstLetter)) {
+                    if (person.getSurname().equals(Surname)) {
+                        personsBySurnameList.add(person.getSurname() + " " + person.getName());
+                    }
                 }
-            }
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("Ошибка: Неизвестный символ");
             }
@@ -102,8 +102,8 @@ public class DZ1Rostelecom {
                 System.out.println("Ученики с фамилией " + Surname + " не найдены");
             }
         } else {
-            System.out.println("Для поиска учеников по фамилии необходимо указать первым аргументов фамилию ученика");
+            System.out.println("Для поиска учеников по фамилии необходимо указать первым аргументов фамилию ученика, например\njava -jar DZ1Rostelecom-1.0-SNAPSHOT.jar Яшина");
         }
-        
+
     }
 }

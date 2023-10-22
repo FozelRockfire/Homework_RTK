@@ -10,7 +10,7 @@ import java.util.LinkedList;
  *
  * @author Ilya Popov
  */
-public class PersonNameDataGroup {
+public class PersonNameDataGroup implements DataGroups {
     int TOTAL_BASKETS = 32; // корзин по количеству букв расского алфавита, исключая Ё
     
     private LinkedList<Person>[] baskets = new LinkedList[TOTAL_BASKETS];
@@ -21,7 +21,7 @@ public class PersonNameDataGroup {
         }
     }
 
-    // алгоритм добавления студента в нужную группу согласно критерию
+    // Добавление студента в нужную корзину согласно первой букве фамилии
     public void addPerson(Person person) {
         try {
             // получаем численное значение символа в виде кода ASCII
@@ -32,8 +32,9 @@ public class PersonNameDataGroup {
         }
     }
 
-    // возвращает студентов конкретной группы
-    public Person[] getPersons(String firstLetter) {
+    // возвращает всех студентов с одиноковой первой буквой фамилии
+    public Person[] getPersons(Object param) {
+            String firstLetter = param.toString();
             int firstLetterCode = (int) firstLetter.charAt(0) - 1040;
             return baskets[firstLetterCode].toArray(new Person[baskets[firstLetterCode].size()]);
     }
