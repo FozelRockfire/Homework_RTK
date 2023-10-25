@@ -4,14 +4,12 @@
  */
 package com.mycompany.dz1onotation;
 
-import java.util.List;
-
 /**
  *
  * @author User
  */
-public interface IDataLoader {
-    
-    List<Person> LoadData (Object data);
-    
+@FunctionalInterface
+public interface GroupCriterion<T, K> {
+
+    K getGroupKey(T item);
 }

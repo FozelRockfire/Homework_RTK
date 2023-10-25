@@ -13,11 +13,12 @@ import java.util.ArrayList;
  *
  * @author User
  */
-public class DataFileLoader implements IDataLoader {
+public class FileDataLoader implements IDataLoader {
 
-    public void LoadData (Object data, ArrayList<? extends DataGroups> groups) {
+    public ArrayList<Person> LoadData (Object data) {
         try (BufferedReader reader = new BufferedReader(new FileReader(data.toString()))) {
             String line;
+            ArrayList<Person> personList = new ArrayList<>();
             reader.readLine(); //пропускаем строку с заголовками
             while ((line = reader.readLine()) != null) {
                 String[] params = line.split(",");
@@ -26,12 +27,12 @@ public class DataFileLoader implements IDataLoader {
                     grades[i - 4] = Integer.parseInt(params[i]);
                 }
                 Person person = new Person(params[0], params[1], Integer.parseInt(params[2]), Integer.parseInt(params[3]), grades);
-                for (DataGroups group : groups) {
-                    group.addPerson(person);
-                }
+                personList.add(person);
             }
+            return personList;
         } catch (IOException e) {
             System.out.println("Error: " + e.getMessage());
         }
+        return null;
     }
 }

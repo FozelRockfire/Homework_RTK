@@ -10,7 +10,7 @@ package com.mycompany.dz1onotation;
  */
 public interface DataGroups {
 
-    public void addPerson(Person person); 
+    public void addPerson(Person person);
 
     public Person[] getPersons(Object param);
 }
