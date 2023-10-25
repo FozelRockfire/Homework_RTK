@@ -4,13 +4,14 @@
  */
 package com.mycompany.dz1onotation;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author User
  */
-public interface DataGroups {
-
-    public void addPerson(Person person); 
-
-    public Person[] getPersons(Object param);
+public interface IDataLoader {
+    
+    void LoadData (Object data, ArrayList<? extends DataGroups> groups);
+    
 }

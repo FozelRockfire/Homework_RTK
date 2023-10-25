@@ -15,27 +15,6 @@ import java.util.Arrays;
  */
 public class DZ1Rostelecom {
 
-    private static void fillTables(String filePath, ArrayList<? extends DataGroups> groups) {
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(filePath));
-            String line;
-            reader.readLine(); //пропускаем строку с заголовками
-            while ((line = reader.readLine()) != null) {
-                String[] params = line.split(",");
-                int[] grades = new int[6];
-                for (int i = 4; i < params.length; i++) {
-                    grades[i - 4] = Integer.parseInt(params[i]);
-                }
-                Person person = new Person(params[0], params[1], Integer.parseInt(params[2]), Integer.parseInt(params[3]), grades);
-                for (DataGroups group : groups) {
-                    group.addPerson(person);
-                }
-            }
-            reader.close();
-        } catch (IOException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-    }
 
     public static void main(String[] args) {
         PersonClassroomDataGroups personsByClass = new PersonClassroomDataGroups();
@@ -43,7 +22,8 @@ public class DZ1Rostelecom {
         PersonNameDataGroup personsBySurname = new PersonNameDataGroup();
         ArrayList<DataGroups> groupList = new ArrayList<>(Arrays.asList(personsByClass, personsByAge, personsBySurname));
         
-        DZ1Rostelecom.fillTables("students.csv", groupList);
+        DataFileLoader loader = new DataFileLoader();
+        loader.LoadData("students.csv", groupList);
         //Во всех заданиях выбираем ту структуру, в которой будет производится наименьшее количество операций
         System.out.println("Задание 1: Вычисление средней оценки в старших классах (10, 11, 12)");
         int count = 0;

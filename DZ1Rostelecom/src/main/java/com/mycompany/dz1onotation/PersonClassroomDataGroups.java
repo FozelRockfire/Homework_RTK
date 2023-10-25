@@ -10,10 +10,11 @@ import java.util.LinkedList;
  *
  * @author Ilya Popov
  */
-class PersonClassroomDataGroups implements DataGroups{
+class PersonClassroomDataGroups implements DataGroups {
+
     int TOTAL_BASKETS = 12;
 
-    private LinkedList<Person>[] baskets = new LinkedList[TOTAL_BASKETS];
+    private final LinkedList<Person>[] baskets = new LinkedList[TOTAL_BASKETS];
 
     public PersonClassroomDataGroups() {
         for (int i = 0; i < TOTAL_BASKETS; i++) {

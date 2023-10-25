@@ -8,9 +8,7 @@ package com.mycompany.dz1onotation;
  *
  * @author User
  */
-public interface DataGroups {
-
-    public void addPerson(Person person); 
-
-    public Person[] getPersons(Object param);
+public interface Command {
+    
+    void execute (String s);
 }
