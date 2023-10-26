@@ -6,10 +6,12 @@ package com.mycompany.dz1onotation;
 
 /**
  *
- * @author User
+ * @author Ilya Popov
+ * @param <Person>
+ * @param <Integer>
  */
 @FunctionalInterface
-public interface GroupCriterion<T, K> {
+public interface GroupCriterion<Person, Integer> {
 
-    K getGroupKey(T item);
+    int getGroupKey(Person person);
 }

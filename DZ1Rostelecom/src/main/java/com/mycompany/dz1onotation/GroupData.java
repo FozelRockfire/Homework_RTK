@@ -8,13 +8,12 @@ import java.util.LinkedList;
 
 /**
  *
- * @author User
+ * @author Ilya Popov
  */
 public class GroupData {
 
     private final GroupCriterion criterion;
     int TOTAL_BASKETS = 35;
-    
 
     private final LinkedList<Person>[] baskets = new LinkedList[TOTAL_BASKETS];
 
@@ -26,7 +25,7 @@ public class GroupData {
     }
 
     public void addPerson(Person person) {
-        int key = (int) criterion.getGroupKey(person);
+        int key = criterion.getGroupKey(person);
         baskets[key - 1].add(person);
     }
 
@@ -34,9 +33,9 @@ public class GroupData {
         int key;
         try {
             key = (int) param;
-        } catch(Exception e){
-            key = (int) param.toString().charAt(0) - 1040;
-        }   
+        } catch (ClassCastException e) {
+            key = (int) param.toString().charAt(0) - 1039;
+        }
         return baskets[key - 1].toArray(new Person[baskets[key - 1].size()]);
     }
 

@@ -13,27 +13,22 @@ import java.util.Arrays;
 public class DZ1Rostelecom {
 
     public static void main(String[] args) {
-//        PersonClassroomDataGroups personsByClass = new PersonClassroomDataGroups();
-//        PersonAgeDataGroups personsByAge = new PersonAgeDataGroups();
-//        PersonNameDataGroup personsBySurname = new PersonNameDataGroup();
-//        ArrayList<DataGroups> groupList = new ArrayList<>(Arrays.asList(personsByClass, personsByAge, personsBySurname));
-        int[] ya = {1,1,1,1,1,1};
-        Person persona = new Person("Або", "Ба", 1, 2, ya);
         GroupCriterion<Person, Integer> ageCriterion = person -> person.getAge();
         GroupCriterion<Person, Integer> classCriterion = person -> person.getGroup();
         GroupCriterion<Person, Integer> surnameCriterion = person -> (int) person.getSurname().charAt(0) - 1039;
         
         GroupData ageDataGroup = new GroupData(ageCriterion);
-        ageDataGroup.addPerson(persona);
-        
         GroupData classDataGroup = new GroupData(classCriterion);
-        classDataGroup.addPerson(persona);
-        
         GroupData surnameDataGroup = new GroupData(surnameCriterion);
-        surnameDataGroup.addPerson(persona);
-        int a = 1;
-//        FileDataLoader loader = new FileDataLoader();
-//        StudentService service = new StudentService(loader);
+        
+
+        
+//        ArrayList<GroupData> groupList = new ArrayList<>(Arrays.asList(ageDataGroup, classDataGroup, surnameDataGroup));
+        FileDataLoader loader = new FileDataLoader("students.csv");
+        StudentService service = new StudentService(loader);
+        CommandBuilder builder = new CommandBuilder(service);
+        
+        builder.createCommand("sameSurname");
 //        service.groupsInsertData("students.csv", groupList);
 //        //Во всех заданиях выбираем ту структуру, в которой будет производится наименьшее количество операций
 //        System.out.println("Задание 1: Вычисление средней оценки в старших классах (10, 11, 12)");
@@ -42,8 +37,7 @@ public class DZ1Rostelecom {
 //        // Используем группировку данных по классам, поскольку необходимо просматривать только старшие классы
 //        // Доступ к списку учеников 10, 11 или 12 классов, осуществляется за O(1)
 //        for (int groupNumber = 10; groupNumber <= 12; groupNumber++) {
-//            personsByClass.getPersons(groupNumber);
-//            for (Person person : personsByClass.getPersons(groupNumber)) {
+//            for (Person person : classDataGroup.getPersons(groupNumber)) {
 //                for (int i = 0; i < person.getGradeList().length; i++) {
 //                    sum += person.getGradeList()[i];
 //                    count++;
@@ -57,8 +51,7 @@ public class DZ1Rostelecom {
 //        // Используем группировку данных по возрасту, поскольку необходимо просматривать только учеников старше 14 лет
 //        // Доступ к списку учеников одного возраста, осуществляется за O(1)
 //        for (int age = 14; age <= 18; age++) {
-//            personsByAge.getPersons(age);
-//            for (Person person : personsByAge.getPersons(age)) {
+//            for (Person person : ageDataGroup.getPersons(age)) {
 //                sum = 0;
 //                for (count = 0; count < person.getGradeList().length; count++) {
 //                    sum += person.getGradeList()[count];
@@ -82,7 +75,7 @@ public class DZ1Rostelecom {
 //            String Surname = args[0];
 //            String firstLetter = Surname.substring(0, 1).toUpperCase();
 //            try {
-//                for (Person person : personsBySurname.getPersons(firstLetter)) {
+//                for (Person person : surnameDataGroup.getPersons(firstLetter)) {
 //                    if (person.getSurname().equals(Surname)) {
 //                        personsBySurnameList.add(person.getSurname() + " " + person.getName());
 //                    }

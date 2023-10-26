@@ -12,6 +12,6 @@ import java.util.List;
  */
 public interface IDataLoader {
     
-    List<Person> LoadData (Object data);
+    List<Person> LoadData ();
     
 }

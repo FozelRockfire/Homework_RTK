@@ -10,5 +10,5 @@ package com.mycompany.dz1onotation;
  */
 public interface Command {
     
-    void execute (String s);
+    void execute ();
 }

@@ -14,9 +14,15 @@ import java.util.ArrayList;
  * @author User
  */
 public class FileDataLoader implements IDataLoader {
+    String path;
 
-    public ArrayList<Person> LoadData (Object data) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(data.toString()))) {
+    public FileDataLoader(String path) {
+        this.path = path;
+    }
+    
+    @Override
+    public ArrayList<Person> LoadData () {
+        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             String line;
             ArrayList<Person> personList = new ArrayList<>();
             reader.readLine(); //пропускаем строку с заголовками

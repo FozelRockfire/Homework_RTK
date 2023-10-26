@@ -9,21 +9,25 @@ import java.util.List;
 
 /**
  *
- * @author User
+ * @author Ilya Popov
  */
 public class StudentService {
 
     private final IDataLoader dataLoader;
+    List<Person> personList = new ArrayList();
 
     public StudentService(IDataLoader dataLoader) {
         this.dataLoader = dataLoader;
     }
-
-    public ArrayList<? extends DataGroups> groupsInsertData(Object data, ArrayList<? extends DataGroups> groups) {
-        List<Person> personList;
-        personList = dataLoader.LoadData(data);
+    
+    public void loadPersons(){
+        personList = dataLoader.LoadData();
+    }
+    
+    public ArrayList<GroupData> groupsInsertData(Object data, ArrayList<GroupData> groups) {
+        personList = dataLoader.LoadData();
         for (Person person : personList) {
-            for (DataGroups group : groups) {
+            for (GroupData group : groups) {
                 group.addPerson(person);
             }
         }

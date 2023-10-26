@@ -10,11 +10,11 @@ package com.mycompany.dz1onotation;
  */
 public class Person {
 
-    private String surname;
-    private String name;
-    private int age;
-    private int group;
-    private int[] gradeList;
+    private final String surname;
+    private final String name;
+    private final int age;
+    private final int group;
+    private final int[] gradeList;
 
     public Person(String surname, String name, int age, int group, int[] gradeList) {
         this.surname = surname;
