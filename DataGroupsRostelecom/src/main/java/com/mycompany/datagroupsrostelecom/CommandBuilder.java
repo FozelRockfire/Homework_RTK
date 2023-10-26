@@ -21,15 +21,25 @@ public class CommandBuilder {
         Command command = null;
         switch (commandName) {
             case "avgGrade":
-                command = new avgGradeCommand(studentService);
+                command = (StudentService service) -> {
+                    service.avgGrade();
+                };
                 break;
             case "onlyFive":
-                command = new onlyFiveCommand(studentService);
+                command = (StudentService service) -> {
+                    service.onlyFive();
+                };
                 break;
             case "sameSurname":
-                command = new sameSurnameCommand(studentService);
+                command = (StudentService service) -> {
+                    service.sameSurname();
+                };
                 break;
         }
-        command.execute();
+        try {
+            command.execute(studentService);
+        } catch (NullPointerException e) {
+            System.out.println("Неизвестная команда");
+        }
     }
 }

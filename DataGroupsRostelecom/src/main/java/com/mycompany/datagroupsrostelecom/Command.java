@@ -10,5 +10,5 @@ package com.mycompany.datagroupsrostelecom;
  */
 public interface Command {
 
-    void execute();
+    void execute(StudentService service);
 }

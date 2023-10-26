@@ -4,6 +4,7 @@
  */
 package com.mycompany.datagroupsrostelecom;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 /**
@@ -13,9 +14,9 @@ import java.util.LinkedList;
 public class GroupData {
 
     private final GroupCriterion criterion;
-    int TOTAL_BASKETS = 35;
+    int TOTAL_BASKETS = 16;
 
-    private final LinkedList<Person>[] baskets = new LinkedList[TOTAL_BASKETS];
+    private LinkedList<Person>[] baskets = new LinkedList[TOTAL_BASKETS];
 
     public GroupData(GroupCriterion criterion) {
         this.criterion = criterion;
@@ -25,8 +26,15 @@ public class GroupData {
     }
 
     public void addPerson(Person person) {
-        int key = criterion.getGroupKey(person);
-        baskets[key - 1].add(person);
+        int key = criterion.getGroupKey(person) - 1;
+        while (key >= TOTAL_BASKETS) {
+            baskets = Arrays.copyOf(baskets, TOTAL_BASKETS * 2);
+            for (int i = TOTAL_BASKETS; i < (TOTAL_BASKETS * 2); i++) {
+                baskets[i] = new LinkedList<>();
+            }
+            TOTAL_BASKETS = (int) (TOTAL_BASKETS * 2);
+        }
+        baskets[key].add(person);
     }
 
     public Person[] getPersons(Object param) {
