@@ -16,17 +16,34 @@ import java.util.Scanner;
 public class StudentService {
 
     List<Person> personList = new ArrayList();
+    // поля групп для избежания повторного создания
+    GroupData classDataGroup = null;
+    GroupData ageDataGroup = null;
+    GroupData surnameDataGroup = null;
 
     public StudentService(IDataLoader dataLoader) {
         personList = dataLoader.LoadData();
     }
 
-    public void avgGrade() {
-        GroupCriterion<Person, Integer> classCriterion = person -> person.getGroup();
-        GroupData classDataGroup = new GroupData(classCriterion);
+    private GroupData fillDataGroup(GroupCriterion groupCriterion) {
+        GroupData dataGroup = new GroupData(groupCriterion);
         for (Person person : personList) {
-            classDataGroup.addPerson(person);
+            dataGroup.addPerson(person);
         }
+        return dataGroup;
+    }
+
+    public void getHelp() {
+        System.out.println("Доступные команды:\navgGrade-Вычисление средней оценки в старших классах\n"
+                + "onlyFive-Поиск всех отличников, старше 14 лет\nsameSurname-Поиск учеников по фамилии\nexit-остановка программы");
+    }
+
+    public void avgGrade() {
+        if (classDataGroup == null) {
+            GroupCriterion<Person, Integer> classCriterion = person -> person.getGroup();
+            classDataGroup = fillDataGroup(classCriterion);
+        }
+
         System.out.println("Задание 1: Вычисление средней оценки в старших классах (10, 11, 12)");
         int count = 0;
         float sum = 0;
@@ -44,14 +61,13 @@ public class StudentService {
     }
 
     public void onlyFive() {
-        GroupCriterion<Person, Integer> ageCriterion = person -> person.getAge();
-        GroupData ageDataGroup = new GroupData(ageCriterion);
-
-        for (Person person : personList) {
-            ageDataGroup.addPerson(person);
+        if (ageDataGroup == null) {
+            GroupCriterion<Person, Integer> ageCriterion = person -> person.getAge();
+            ageDataGroup = fillDataGroup(ageCriterion);
         }
+
         System.out.println("Задание 2: Поиск всех отличников, старше 14 лет");
-        ArrayList<String> honorslist = new ArrayList();
+        List<String> honorslist = new ArrayList();
         // Используем группировку данных по возрасту, поскольку необходимо просматривать только учеников старше 14 лет
         // Доступ к списку учеников одного возраста, осуществляется за O(1)
         int sum;
@@ -75,11 +91,9 @@ public class StudentService {
     }
 
     public void sameSurname() {
-        GroupCriterion<Person, Integer> surnameCriterion = person -> (int) person.getSurname().charAt(0) - 1039;
-        GroupData surnameDataGroup = new GroupData(surnameCriterion);
-
-        for (Person person : personList) {
-            surnameDataGroup.addPerson(person);
+        if (surnameDataGroup == null) {
+            GroupCriterion<Person, Integer> surnameCriterion = person -> (int) person.getSurname().charAt(0) - 1039;
+            surnameDataGroup = fillDataGroup(surnameCriterion);
         }
 
         System.out.println("Задание 3: Поиск учеников по фамилии");

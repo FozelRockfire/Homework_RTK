@@ -4,6 +4,6 @@ com\mycompany\datagroupsrostelecom\Command.class
 com\mycompany\datagroupsrostelecom\CommandBuilder.class
 com\mycompany\datagroupsrostelecom\IDataLoader.class
 com\mycompany\datagroupsrostelecom\Person.class
-com\mycompany\datagroupsrostelecom\DZ1Rostelecom.class
 com\mycompany\datagroupsrostelecom\GroupData.class
+com\mycompany\datagroupsrostelecom\DataGroupsRostelecom.class
 com\mycompany\datagroupsrostelecom\StudentService.class

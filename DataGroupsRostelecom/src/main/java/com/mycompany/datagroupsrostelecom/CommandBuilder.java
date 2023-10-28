@@ -20,6 +20,11 @@ public class CommandBuilder {
 
         Command command = null;
         switch (commandName) {
+            case "help":
+                command = (StudentService service) -> {
+                    service.getHelp();
+                };
+                break;
             case "avgGrade":
                 command = (StudentService service) -> {
                     service.avgGrade();
@@ -39,7 +44,7 @@ public class CommandBuilder {
         try {
             command.execute(studentService);
         } catch (NullPointerException e) {
-            System.out.println("Неизвестная команда");
+            System.out.println("Неизвестная команда, для получения списка команд используйте help");
         }
     }
 }
