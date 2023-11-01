@@ -2,10 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.datagroupsrostelecom;
+package commands;
+
+import services.StudentService;
 
 /**
- *
  * @author Ilya Popov
  */
 public class CommandBuilder {
@@ -18,33 +19,26 @@ public class CommandBuilder {
 
     public void createCommand(String commandName) {
 
-        Command command = null;
+        ICommand command = null;
         switch (commandName) {
             case "help":
-                command = (StudentService service) -> {
-                    service.getHelp();
-                };
+                command = StudentService::getHelp;
                 break;
             case "avgGrade":
-                command = (StudentService service) -> {
-                    service.avgGrade();
-                };
+                command = StudentService::avgGrade;
                 break;
             case "onlyFive":
-                command = (StudentService service) -> {
-                    service.onlyFive();
-                };
+                command = StudentService::onlyFive;
                 break;
             case "sameSurname":
-                command = (StudentService service) -> {
-                    service.sameSurname();
-                };
+                command = StudentService::sameSurname;
                 break;
+            default:
+                System.out.println("Неизвестная команда: " + commandName + " для получения списка команд используйте help");
         }
-        try {
+        if (command != null) {
             command.execute(studentService);
-        } catch (NullPointerException e) {
-            System.out.println("Неизвестная команда, для получения списка команд используйте help");
         }
+
     }
 }

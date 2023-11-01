@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.datagroupsrostelecom;
+package dataGroups;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -11,14 +11,14 @@ import java.util.LinkedList;
  *
  * @author Ilya Popov
  */
-public class GroupData {
+public class DataGroup {
 
-    private final GroupCriterion criterion;
+    private final GroupCriterion<Person> criterion;
     int TOTAL_BASKETS = 16;
 
     private LinkedList<Person>[] baskets = new LinkedList[TOTAL_BASKETS];
 
-    public GroupData(GroupCriterion criterion) {
+    public DataGroup(GroupCriterion<Person> criterion) {
         this.criterion = criterion;
         for (int i = 0; i < TOTAL_BASKETS; i++) {
             baskets[i] = new LinkedList<>();

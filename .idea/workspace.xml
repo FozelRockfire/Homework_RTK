@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="503a7bb7-d644-49f8-9a98-d655e10be6b4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataGroupsRostelecom/src/main/java/com/mycompany/datagroupsrostelecom/DataGroupsRostelecom.java" beforeDir="false" afterPath="$PROJECT_DIR$/DataGroupsRostelecom/src/main/java/com/mycompany/datagroupsrostelecom/DataGroupsRostelecom.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataGroupsRostelecom/src/main/java/com/mycompany/datagroupsrostelecom/GroupData.java" beforeDir="false" afterPath="$PROJECT_DIR$/DataGroupsRostelecom/src/main/java/com/mycompany/datagroupsrostelecom/DataGroup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataGroupsRostelecom/src/main/java/com/mycompany/datagroupsrostelecom/StudentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/DataGroupsRostelecom/src/main/java/com/mycompany/datagroupsrostelecom/StudentService.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2XXDsG947Szd9vcmg26cHwD9UNK" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "DZ2",
+    "last_opened_file_path": "D:/Git/GitRepos/Homework_RTK/DataGroupsRostelecom",
+    "project.structure.last.edited": "Global Libraries",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "proofread"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="DataGroupsRostelecom" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.mycompany.datagroupsrostelecom.DataGroupsRostelecom" />
+      <module name="DataGroupsRostelecom" />
+      <option name="PROGRAM_PARAMETERS" value="students.csv" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.mycompany.datagroupsrostelecom.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="503a7bb7-d644-49f8-9a98-d655e10be6b4" name="Changes" comment="" />
+      <created>1698766737031</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1698766737031</updated>
+    </task>
+    <servers />
+  </component>
+</project>

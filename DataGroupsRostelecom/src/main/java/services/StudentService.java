@@ -2,7 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.datagroupsrostelecom;
+package services;
+
+import dataGroups.DataGroup;
+import dataGroups.GroupCriterion;
+import loaders.IDataLoader;
+import dataGroups.Person;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,23 +15,22 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- *
  * @author Ilya Popov
  */
 public class StudentService {
 
-    List<Person> personList = new ArrayList();
+    List<Person> personList;
     // поля групп для избежания повторного создания
-    GroupData classDataGroup = null;
-    GroupData ageDataGroup = null;
-    GroupData surnameDataGroup = null;
+    public DataGroup classDataGroup = null;
+    public DataGroup ageDataGroup = null;
+    public DataGroup surnameDataGroup = null;
 
     public StudentService(IDataLoader dataLoader) {
         personList = dataLoader.LoadData();
     }
 
-    private GroupData fillDataGroup(GroupCriterion groupCriterion) {
-        GroupData dataGroup = new GroupData(groupCriterion);
+    public DataGroup fillDataGroup(GroupCriterion<Person> groupCriterion) {
+        DataGroup dataGroup = new DataGroup(groupCriterion);
         for (Person person : personList) {
             dataGroup.addPerson(person);
         }
@@ -34,13 +38,17 @@ public class StudentService {
     }
 
     public void getHelp() {
-        System.out.println("Доступные команды:\navgGrade-Вычисление средней оценки в старших классах\n"
-                + "onlyFive-Поиск всех отличников, старше 14 лет\nsameSurname-Поиск учеников по фамилии\nexit-остановка программы");
+        System.out.println("""
+                Доступные команды:
+                1) avgGrade - Вычисление средней оценки в старших классах
+                2) onlyFive - Поиск всех отличников, старше 14 лет
+                3) sameSurname - Поиск учеников по фамилии
+                4) exit - остановка программы""");
     }
 
     public void avgGrade() {
         if (classDataGroup == null) {
-            GroupCriterion<Person, Integer> classCriterion = person -> person.getGroup();
+            GroupCriterion<Person> classCriterion = Person::getGroup;
             classDataGroup = fillDataGroup(classCriterion);
         }
 
@@ -62,12 +70,12 @@ public class StudentService {
 
     public void onlyFive() {
         if (ageDataGroup == null) {
-            GroupCriterion<Person, Integer> ageCriterion = person -> person.getAge();
+            GroupCriterion<Person> ageCriterion = Person::getAge;
             ageDataGroup = fillDataGroup(ageCriterion);
         }
 
         System.out.println("Задание 2: Поиск всех отличников, старше 14 лет");
-        List<String> honorslist = new ArrayList();
+        List<String> honorslist = new ArrayList<>();
         // Используем группировку данных по возрасту, поскольку необходимо просматривать только учеников старше 14 лет
         // Доступ к списку учеников одного возраста, осуществляется за O(1)
         int sum;
@@ -78,7 +86,7 @@ public class StudentService {
                 for (count = 0; count < person.getGradeList().length; count++) {
                     sum += person.getGradeList()[count];
                 }
-                if (sum / (count) == 5.00) {
+                if ((double) sum / (count) == 5.00) {
                     honorslist.add(person.getSurname() + " " + person.getName());
                 }
             }
@@ -92,15 +100,15 @@ public class StudentService {
 
     public void sameSurname() {
         if (surnameDataGroup == null) {
-            GroupCriterion<Person, Integer> surnameCriterion = person -> (int) person.getSurname().charAt(0) - 1039;
+            GroupCriterion<Person> surnameCriterion = person -> (int) person.getSurname().charAt(0) - 1039;
             surnameDataGroup = fillDataGroup(surnameCriterion);
         }
 
         System.out.println("Задание 3: Поиск учеников по фамилии");
-        ArrayList<String> personsBySurnameList = new ArrayList();
+        ArrayList<String> personsBySurnameList = new ArrayList<>();
         // Используем группировку данных по первой букве фамилии, поскольку необходимо просматривать конкретную фамилию
         // Доступ к списку учеников с одинаковой первой буквой в фамилии, осуществляется за O(1)
-        Scanner sc = new Scanner(System.in, "windows-1251");
+        Scanner sc = new Scanner(System.in);
         System.out.print("Введите фамилию для поиска: ");
         String surname = sc.nextLine();
         String firstLetter = surname.substring(0, 1).toUpperCase();

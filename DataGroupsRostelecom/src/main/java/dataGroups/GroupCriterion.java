@@ -2,16 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package com.mycompany.datagroupsrostelecom;
+package dataGroups;
 
 /**
  *
  * @author Ilya Popov
- * @param <Person>
- * @param <Integer>
+ * @param <T>
  */
 @FunctionalInterface
-public interface GroupCriterion<Person, Integer> {
+public interface GroupCriterion<T> {
 
-    int getGroupKey(Person person);
+    int getGroupKey(T person);
 }

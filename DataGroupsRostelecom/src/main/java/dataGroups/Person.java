@@ -1,4 +1,4 @@
-package com.mycompany.datagroupsrostelecom;
+package dataGroups;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
