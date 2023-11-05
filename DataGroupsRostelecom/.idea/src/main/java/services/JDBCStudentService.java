@@ -30,6 +30,7 @@ public class JDBCStudentService {
         try {
             if (connection != null && !connection.isClosed()) {
                 connection.close();
+                System.out.println("отключено");
             }
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
@@ -105,8 +106,8 @@ public class JDBCStudentService {
                     addGrades.addBatch();
                 }
                 addGrades.executeBatch();
-                connection.commit();
             }
+            connection.commit();
         }
 
         public List<String> avgGrade() throws SQLException {
