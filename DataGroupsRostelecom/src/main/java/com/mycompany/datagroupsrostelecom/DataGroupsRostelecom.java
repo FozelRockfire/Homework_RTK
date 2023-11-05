@@ -6,12 +6,12 @@ package com.mycompany.datagroupsrostelecom;
 import commands.CommandBuilder;
 import loaders.FileDataLoader;
 import loaders.IDataLoader;
-import services.StudentService;
+import services.DataGroupStudentService;
+import services.JDBCStudentService;
 
 import java.util.Scanner;
 
 /**
- *
  * @author Ilya Popov
  */
 public class DataGroupsRostelecom {
@@ -19,8 +19,9 @@ public class DataGroupsRostelecom {
     public static void main(String[] args) {
 
         IDataLoader loader = new FileDataLoader("students.csv");
-        StudentService service = new StudentService(loader);
-        CommandBuilder builder = new CommandBuilder(service);
+        JDBCStudentService dbService = new JDBCStudentService(loader, "jdbc:postgresql://localhost:5432/postgres", "postgres", "112");
+        DataGroupStudentService dataGroupService = new DataGroupStudentService(loader);
+        CommandBuilder builder = new CommandBuilder(dataGroupService, dbService);
 
         Scanner sc = new Scanner(System.in);
         String command;
@@ -34,5 +35,6 @@ public class DataGroupsRostelecom {
                 builder.createCommand(command);
             }
         }
+        dbService.disconnect();
     }
 }

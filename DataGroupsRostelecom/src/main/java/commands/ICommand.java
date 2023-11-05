@@ -4,7 +4,9 @@
  */
 package commands;
 
-import services.StudentService;
+import services.DataGroupStudentService;
+
+import java.sql.SQLException;
 
 /**
  *
@@ -12,5 +14,5 @@ import services.StudentService;
  */
 public interface ICommand {
 
-    void execute(StudentService service);
+    void execute() throws SQLException;
 }

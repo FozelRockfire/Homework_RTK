@@ -4,7 +4,7 @@
  */
 package loaders;
 
-import dataGroups.Person;
+import DTO.Person;
 
 import java.util.List;
 

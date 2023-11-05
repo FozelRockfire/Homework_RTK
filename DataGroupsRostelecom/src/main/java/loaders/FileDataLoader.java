@@ -4,12 +4,13 @@
  */
 package loaders;
 
-import dataGroups.Person;
+import DTO.Person;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -28,14 +29,14 @@ public class FileDataLoader implements IDataLoader {
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             String line;
             ArrayList<Person> personList = new ArrayList<>();
-            reader.readLine(); //пропускаем строку с заголовками
+            String [] subjects = Arrays.copyOfRange(reader.readLine().split(","), 4, reader.readLine().split(",").length); // строка с предметами
             while ((line = reader.readLine()) != null) {
                 String[] params = line.split(",");
                 int[] grades = new int[6];
                 for (int i = 4; i < params.length; i++) {
                     grades[i - 4] = Integer.parseInt(params[i]);
                 }
-                Person person = new Person(params[0], params[1], Integer.parseInt(params[2]), Integer.parseInt(params[3]), grades);
+                Person person = new Person(params[0], params[1], Integer.parseInt(params[2]), Integer.parseInt(params[3]), grades, subjects);
                 personList.add(person);
             }
             return personList;
@@ -44,4 +45,5 @@ public class FileDataLoader implements IDataLoader {
         }
         return null;
     }
+
 }

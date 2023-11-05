@@ -1,4 +1,4 @@
-package dataGroups;
+package DTO;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -15,13 +15,15 @@ public class Person {
     private final int age;
     private final int group;
     private final int[] gradeList;
+    private final String[] subjectList;
 
-    public Person(String surname, String name, int age, int group, int[] gradeList) {
+    public Person(String surname, String name, int age, int group, int[] gradeList, String[] subjectList) {
         this.surname = surname;
         this.name = name;
         this.age = age;
         this.group = group;
         this.gradeList = gradeList;
+        this.subjectList = subjectList;
     }
 
     public String getSurname() {
@@ -44,4 +46,7 @@ public class Person {
         return gradeList;
     }
 
+    public String[] getSubjectList() {
+        return subjectList;
+    }
 }

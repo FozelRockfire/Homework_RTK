@@ -4,41 +4,76 @@
  */
 package commands;
 
-import services.StudentService;
+import commands.DBCommands.CommandDBAvgGrade;
+import commands.DBCommands.CommandDBGradeBySurname;
+import commands.DBCommands.CommandDBOnlyFive;
+import commands.DBCommands.CommandFillDB;
+import commands.DataGroupCommands.CommandAvgGrade;
+import commands.DataGroupCommands.CommandOnlyFive;
+import commands.DataGroupCommands.CommandSameSurname;
+import services.DataGroupStudentService;
+import services.JDBCStudentService;
+
+import java.sql.SQLException;
 
 /**
  * @author Ilya Popov
  */
 public class CommandBuilder {
 
-    private final StudentService studentService;
+    private final DataGroupStudentService dataGroupStudentService;
+    private final JDBCStudentService jdbcStudentService;
 
-    public CommandBuilder(StudentService studentService) {
-        this.studentService = studentService;
+    public CommandBuilder(DataGroupStudentService studentService, JDBCStudentService jdbcStudentService) {
+        this.dataGroupStudentService = studentService;
+        this.jdbcStudentService = jdbcStudentService;
     }
 
     public void createCommand(String commandName) {
 
         ICommand command = null;
         switch (commandName) {
+            case "avg_grade":
+                command = new CommandAvgGrade(dataGroupStudentService);
+                break;
+            case "only_five":
+                command = new CommandOnlyFive(dataGroupStudentService);
+                break;
+            case "same_surname":
+                command = new CommandSameSurname(dataGroupStudentService);
+                break;
+            case "db_avg_grade":
+                command = new CommandDBAvgGrade(jdbcStudentService);
+                break;
+            case "db_only_five":
+                command = new CommandDBOnlyFive(jdbcStudentService);
+                break;
+            case "db_grade_by_surname":
+                command = new CommandDBGradeBySurname(jdbcStudentService);
+                break;
+            case "db_fill":
+                command = new CommandFillDB(jdbcStudentService);
+                break;
             case "help":
-                command = StudentService::getHelp;
-                break;
-            case "avgGrade":
-                command = StudentService::avgGrade;
-                break;
-            case "onlyFive":
-                command = StudentService::onlyFive;
-                break;
-            case "sameSurname":
-                command = StudentService::sameSurname;
+                System.out.println("Доступные команды:\n" +
+                                   "   1) avg_grade - Вычисление средней оценки в старших классах\n" +
+                                   "   2) only_five - Поиск всех отличников, старше 14 лет\n" +
+                                   "   3) same_surname - Поиск учеников по фамилии\n" +
+                                   "   4) db_avg_grade - Вычисление средней оценки в старших классах из данных в БД\n" +
+                                   "   5) db_only_five - Поиск всех отличников, старше 14 лет из данных в БД\n" +
+                                   "   6) db_grade_by_surname - Поиск средней оценки по фамилии из данных в БД\n" +
+                                   "   7) db_fill - Заполняет БД из файла students.csv\n" +
+                                   "   7) exit - остановка программы");
                 break;
             default:
                 System.out.println("Неизвестная команда: " + commandName + " для получения списка команд используйте help");
         }
         if (command != null) {
-            command.execute(studentService);
+            try {
+                command.execute();
+            } catch (SQLException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
         }
-
     }
 }

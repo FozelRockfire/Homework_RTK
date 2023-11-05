@@ -4,6 +4,8 @@
  */
 package dataGroups;
 
+import DTO.Person;
+
 import java.util.Arrays;
 import java.util.LinkedList;
 
@@ -32,7 +34,7 @@ public class DataGroup {
             for (int i = TOTAL_BASKETS; i < (TOTAL_BASKETS * 2); i++) {
                 baskets[i] = new LinkedList<>();
             }
-            TOTAL_BASKETS = (int) (TOTAL_BASKETS * 2);
+            TOTAL_BASKETS = (TOTAL_BASKETS * 2);
         }
         baskets[key].add(person);
     }
