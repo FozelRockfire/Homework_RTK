@@ -3,15 +3,14 @@
  */
 package com.mycompany.datagroupsrostelecom;
 
-import commands.CommandBuilder;
-import loaders.FileDataLoader;
-import loaders.IDataLoader;
-import services.StudentService;
+import com.mycompany.commands.CommandBuilder;
+import com.mycompany.loaders.FileDataLoader;
+import com.mycompany.loaders.IDataLoader;
+import com.mycompany.services.DataGroupStudentService;
 
 import java.util.Scanner;
 
 /**
- *
  * @author Ilya Popov
  */
 public class DataGroupsRostelecom {
@@ -19,8 +18,8 @@ public class DataGroupsRostelecom {
     public static void main(String[] args) {
 
         IDataLoader loader = new FileDataLoader("students.csv");
-        StudentService service = new StudentService(loader);
-        CommandBuilder builder = new CommandBuilder(service);
+        DataGroupStudentService dataGroupService = new DataGroupStudentService(loader);
+        CommandBuilder builder = new CommandBuilder(dataGroupService);
 
         Scanner sc = new Scanner(System.in);
         String command;
