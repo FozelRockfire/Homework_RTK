@@ -29,7 +29,8 @@ public class FileDataLoader implements IDataLoader {
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             String line;
             ArrayList<Person> personList = new ArrayList<>();
-            String [] subjects = Arrays.copyOfRange(reader.readLine().split(","), 4, reader.readLine().split(",").length); // строка с предметами
+            String[] firstLine= reader.readLine().split(",");
+            String [] subjects = Arrays.copyOfRange(firstLine, 4, firstLine.length); // строка с предметами
             while ((line = reader.readLine()) != null) {
                 String[] params = line.split(",");
                 int[] grades = new int[6];

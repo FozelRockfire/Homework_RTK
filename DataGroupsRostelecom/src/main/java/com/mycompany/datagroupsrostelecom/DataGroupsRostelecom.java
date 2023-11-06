@@ -18,25 +18,25 @@ public class DataGroupsRostelecom {
 
     public static void main(String[] args) {
         try {
-        IDataLoader loader = new FileDataLoader("students.csv");
-        JDBCStudentService dbService;
+            IDataLoader loader = new FileDataLoader("students.csv");
+            JDBCStudentService dbService;
 
             dbService = new JDBCStudentService(loader, args[0], args[1], args[2]);
             DataGroupStudentService dataGroupService = new DataGroupStudentService(loader);
             CommandBuilder builder = new CommandBuilder(dataGroupService, dbService);
-        Scanner sc = new Scanner(System.in);
-        String command;
-        boolean isrunning = true;
-        while (isrunning) {
-            System.out.println("Введите команду");
-            command = sc.nextLine();
-            if (command.equals("exit")) {
-                isrunning = false;
-            } else {
-                builder.createCommand(command);
+            Scanner sc = new Scanner(System.in);
+            String command;
+            boolean isrunning = true;
+            while (isrunning) {
+                System.out.println("Введите команду");
+                command = sc.nextLine();
+                if (command.equals("exit")) {
+                    isrunning = false;
+                } else {
+                    builder.createCommand(command);
+                }
             }
-        }
-        dbService.disconnect();
+            dbService.disconnect();
         } catch (IndexOutOfBoundsException e) {
             System.out.println("не указаны аргументы для подключения к БД, введите команду следующим образом:\n" +
                                "java -jav DataGroupsRostelecom.jar URL название_таблицы пароль\n" +

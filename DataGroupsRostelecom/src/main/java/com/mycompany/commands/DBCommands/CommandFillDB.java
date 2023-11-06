@@ -16,5 +16,6 @@ public class CommandFillDB implements ICommand {
     public void execute() throws SQLException {
         System.out.println("Происходит загрузка данных в БД...");
         jdbcStudentService.fillDB();
+        System.out.println("Загрузка данных в БД завершена");
     }
 }
