@@ -4,6 +4,9 @@ package com.mycompany.DTO;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+
+import java.util.Map;
+
 /**
  *
  * @author Ilya Popov
@@ -14,16 +17,22 @@ public class Person {
     private final String name;
     private final int age;
     private final int group;
-    private final int[] gradeList;
-    private final String[] subjectList;
 
-    public Person(String surname, String name, int age, int group, int[] gradeList, String[] subjectList) {
+    private float avgGrade;
+
+    private final Map<String, Integer> gradeList;
+
+    public Person(String surname, String name, int age, int group, Map<String, Integer> gradeList, float avgGrade) {
         this.surname = surname;
         this.name = name;
         this.age = age;
         this.group = group;
         this.gradeList = gradeList;
-        this.subjectList = subjectList;
+        this.avgGrade = avgGrade;
+    }
+
+    public float getAvgGrade() {
+        return avgGrade;
     }
 
     public String getSurname() {
@@ -42,11 +51,11 @@ public class Person {
         return group;
     }
 
-    public int[] getGradeList() {
+    public Map<String, Integer> getGradeList() {
         return gradeList;
     }
 
-    public String[] getSubjectList() {
-        return subjectList;
+    public void setAvgGrade(float avgGrade) {
+        this.avgGrade = avgGrade;
     }
 }

@@ -11,6 +11,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -28,16 +30,22 @@ public class FileDataLoader implements IDataLoader {
     public ArrayList<Person> LoadData() {
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             String line;
+            float avgGrade;
             ArrayList<Person> personList = new ArrayList<>();
+            Map<String, Integer> gradeList;
             String [] headerLine = reader.readLine().split(",");
-            String [] subjects = Arrays.copyOfRange(headerLine, 4, headerLine.length); // строка с предметами
+
+            int i;
             while ((line = reader.readLine()) != null) {
+                gradeList = new HashMap<>();
+                avgGrade = 0;
                 String[] params = line.split(",");
-                int[] grades = new int[6];
-                for (int i = 4; i < params.length; i++) {
-                    grades[i - 4] = Integer.parseInt(params[i]);
+                for (i = 4; i < params.length; i++) {
+                    gradeList.put(headerLine[i], Integer.valueOf(params[i]));
+                    avgGrade += Integer.parseInt(params[i]);
                 }
-                Person person = new Person(params[0], params[1], Integer.parseInt(params[2]), Integer.parseInt(params[3]), grades, subjects);
+                avgGrade /= (i-4);
+                Person person = new Person(params[0], params[1], Integer.parseInt(params[2]), Integer.parseInt(params[3]), gradeList, avgGrade);
                 personList.add(person);
             }
             return personList;

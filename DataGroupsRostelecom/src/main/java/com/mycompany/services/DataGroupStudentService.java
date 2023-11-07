@@ -30,5 +30,4 @@ public class DataGroupStudentService {
             dataGroups[index].addPerson(person);
         }
     }
-
 }

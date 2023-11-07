@@ -1,7 +1,7 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
-package com.mycompany.datagroupsrostelecom;
+package com.mycompany;
 
 import com.mycompany.commands.CommandBuilder;
 import com.mycompany.loaders.FileDataLoader;
