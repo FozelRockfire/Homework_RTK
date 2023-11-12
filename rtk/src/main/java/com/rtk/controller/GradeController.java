@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -21,11 +22,16 @@ public class GradeController {
         this.gradeService = gradeService;
     }
 
-    @GetMapping("/average/")
+    @GetMapping("/average")
     public ResponseEntity<List<AverageGradeDTO>> getAverageGradesByGroup(@RequestParam int groupNumber) {
-        List<AverageGradeDTO> averageGrades = gradeService.getAverageGradesByGroup(groupNumber);
-        return ResponseEntity.ok(averageGrades);
+        try {
+            List<AverageGradeDTO> averageGrades = gradeService.getAverageGradesByGroup(groupNumber);
+            return ResponseEntity.ok(averageGrades);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ArrayList<>());
+        }
     }
+
 
     @PutMapping("/{studentId}/{subjectName}")
     public ResponseEntity<String> updateGrade(@PathVariable int studentId, @PathVariable String subjectName, @RequestParam int newGrade) {

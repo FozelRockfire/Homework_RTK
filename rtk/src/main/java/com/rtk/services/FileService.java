@@ -39,8 +39,6 @@ public class FileService {
         String[] params;
         String[] firstLineParams = null;
 
-        double startTime = System.currentTimeMillis();
-
         for (int i = 0; i < stringList.size(); i++) {
 
 
@@ -81,14 +79,7 @@ public class FileService {
                 gradeRepo.saveAll(grades);
                 gradeRepo.flush();
                 grades.clear();
-
-                System.out.println(i + " " + ((System.currentTimeMillis() - startTime) / (1000)));
             }
         }
-
-        double endTime = System.currentTimeMillis();
-        double duration = endTime - startTime;
-
-        System.out.println("Время выполнения: " + duration / (1000) + " секунд");
     }
 }

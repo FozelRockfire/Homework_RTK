@@ -1,0 +1,138 @@
+---
+openapi: 3.0.0
+info:
+  title: Управление учениками и оценками API
+  description: "API для работы с учениками, оценками и расчетом среднего балла."
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/ILYAPOPOV2801/online_diary/1.0.0
+  description: SwaggerHub API Auto Mocking
+paths:
+  /average:
+    get:
+      summary: Получить средние оценки по группе
+      parameters:
+      - name: groupNumber
+        in: query
+        description: Номер группы учеников
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          example: 11
+      responses:
+        "200":
+          description: Успешный запрос
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AverageGradeDTO'
+        "404":
+          description: Данные не найдены
+          content:
+            application/json:
+              example: []
+  /{studentId}/{subjectName}:
+    put:
+      summary: Обновить оценку ученика
+      parameters:
+      - name: studentId
+        in: path
+        description: Идентификатор ученика
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 12343
+      - name: subjectName
+        in: path
+        description: Название предмета
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: rus
+      - name: newGrade
+        in: query
+        description: Новая оценка
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          example: 5
+      responses:
+        "200":
+          description: Успешное обновление
+        "404":
+          description: Ученик или предмет не найдены
+  /load:
+    post:
+      summary: Загрузить данные из файла
+      responses:
+        "200":
+          description: Успешная загрузка
+  /add:
+    post:
+      summary: Добавить ученика с оценками
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentWithGradesDTO'
+        required: true
+      responses:
+        "200":
+          description: Студент добавлен в БД
+        "500":
+          description: Ошибка при добавлении студента
+components:
+  schemas:
+    GradeDTO:
+      type: object
+      properties:
+        subjectName:
+          type: string
+          example: rus
+        grade:
+          type: integer
+          example: 5
+    StudentWithGradesDTO:
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: Дмитрий
+        lastName:
+          type: string
+          example: Абрамов
+        age:
+          type: integer
+          example: 18
+        groupNumber:
+          type: integer
+          example: 11
+        grades:
+          type: array
+          items:
+            $ref: '#/components/schemas/GradeDTO'
+    AverageGradeDTO:
+      type: object
+      properties:
+        studentId:
+          type: integer
+          example: 12343
+        firstName:
+          type: string
+          example: Дмитрий
+        lastName:
+          type: string
+          example: Абрамов
+        averageGrade:
+          type: number
+          example: 4.75
