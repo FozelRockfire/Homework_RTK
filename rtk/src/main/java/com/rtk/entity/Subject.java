@@ -10,15 +10,13 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "subjects")
-public class SubjectEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class Subject {
 
-    @Column(name = "subject_name", nullable = false, unique = true)
+    @Id
+    @Column(name = "subject_name")
     private String subjectName;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "subject")
-    private List<GradeEntity> grades;
+    private List<Grade> grades;
 
 }

@@ -10,15 +10,17 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "students")
-public class StudentEntity {
+public class Student {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqGen")
+    @SequenceGenerator(name = "seqGen", sequenceName = "seq", initialValue = 1)
     private int id;
+
     private String firstName;
     private String lastName;
     private int age;
     private int groupNumber;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
-    private List<GradeEntity> grades;
+    private List<Grade> grades;
 }

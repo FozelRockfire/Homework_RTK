@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "grades")
-public class GradeEntity {
+public class Grade {
     @Id
     private GradeId id;
 
@@ -17,14 +17,12 @@ public class GradeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("studentId")
-    private StudentEntity student;
+    private Student student;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("subjectId")
-    private SubjectEntity subject;
+    @MapsId("subjectName")
+    @JoinColumn(name = "subject_name")
+    private Subject subject;
 
-
-
-    // getters and setters
 }
 
