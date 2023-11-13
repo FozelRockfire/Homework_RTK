@@ -5,5 +5,5 @@ import java.util.List;
 
 
 public interface IDataLoader<T> {
-    List<T> LoadData();
+    List<T> loadData();
 }

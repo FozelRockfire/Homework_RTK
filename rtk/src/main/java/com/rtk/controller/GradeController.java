@@ -15,12 +15,8 @@ import java.util.NoSuchElementException;
 @RequestMapping("/grades")
 public class GradeController {
 
-    private final GradeService gradeService;
-
     @Autowired
-    public GradeController(GradeService gradeService) {
-        this.gradeService = gradeService;
-    }
+    private GradeService gradeService;
 
     @GetMapping("/average")
     public ResponseEntity<List<AverageGradeDTO>> getAverageGradesByGroup(@RequestParam int groupNumber) {
@@ -33,7 +29,7 @@ public class GradeController {
     }
 
 
-    @PutMapping("/{studentId}/{subjectName}")
+    @PutMapping("/student/{studentId}/subject/{subjectName}")
     public ResponseEntity<String> updateGrade(@PathVariable int studentId, @PathVariable String subjectName, @RequestParam int newGrade) {
         try {
             gradeService.updateGrade(studentId, subjectName, newGrade);

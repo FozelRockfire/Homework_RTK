@@ -8,7 +8,7 @@ servers:
 - url: https://virtserver.swaggerhub.com/ILYAPOPOV2801/online_diary/1.0.0
   description: SwaggerHub API Auto Mocking
 paths:
-  /average:
+  /grades/average:
     get:
       summary: Получить средние оценки по группе
       parameters:
@@ -35,7 +35,7 @@ paths:
           content:
             application/json:
               example: []
-  /{studentId}/{subjectName}:
+  /grades/student/{studentId}/subject/{subjectName}:
     put:
       summary: Обновить оценку ученика
       parameters:
@@ -71,13 +71,13 @@ paths:
           description: Успешное обновление
         "404":
           description: Ученик или предмет не найдены
-  /load:
+  /insertion/load:
     post:
       summary: Загрузить данные из файла
       responses:
         "200":
           description: Успешная загрузка
-  /add:
+  /insertion/add:
     post:
       summary: Добавить ученика с оценками
       requestBody:
