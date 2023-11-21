@@ -1,12 +1,14 @@
 package com.rtk.services;
 
 import com.rtk.dto.GradeDTO;
-import com.rtk.dto.StudentWithGradesDTO;
+import com.rtk.dto.CreateStudentWithGradesRequestDTO;
 import com.rtk.entity.Grade;
 import com.rtk.entity.GradeId;
 import com.rtk.entity.Student;
-import com.rtk.entity.Subject;
 import com.rtk.loaders.FileDataLoader;
+import com.rtk.mapper.GradeMapper;
+import com.rtk.mapper.StudentMapper;
+import com.rtk.mapper.SubjectMapper;
 import com.rtk.repository.GradeRepo;
 import com.rtk.repository.StudentRepo;
 import com.rtk.repository.SubjectRepo;
@@ -28,18 +30,26 @@ public class InsertionService {
     private StudentRepo studentRepo;
     @Autowired
     private FileDataLoader dataLoader;
+    @Autowired
+    private StudentMapper studentMapper;
+    @Autowired
+    private GradeMapper gradeMapper;
+    @Autowired
+    private SubjectMapper subjectMapper;
 
     public void loadDBFromCSV() {
-        List<StudentWithGradesDTO> studentList = dataLoader.loadData();
+        List<CreateStudentWithGradesRequestDTO> studentList = dataLoader.loadData();
 
         List<Student> students = new ArrayList<>();
         List<Grade> grades = new ArrayList<>();
 
-        for (int i = 0; i < studentList.size(); i++) {
-            StudentWithGradesDTO studentWithGradesDTO = studentList.get(i);
+        List<String> addedSubjects= new ArrayList<>();
+
+        for (int currentStudent = 0; currentStudent < studentList.size(); currentStudent++) {
+            CreateStudentWithGradesRequestDTO studentWithGradesDTO = studentList.get(currentStudent);
 
             //Загрузка одного студента в таблицу
-            Student student = addStudent(studentWithGradesDTO);
+            Student student = studentMapper.toEntity(studentWithGradesDTO);
             students.add(student);
 
             //Обработка первой строки с предметами и загрузка всех пердметов в таблицу предметов
@@ -47,12 +57,14 @@ public class InsertionService {
 
             //Загрузка оценок одного студента таблицу
             for (GradeDTO gradeDTO : gradeDTOList) {
-                if (i == 0){
-                    subjectRepo.save(addSubject(gradeDTO));
+                //сохранение предметов в БД
+                if (!addedSubjects.contains(gradeDTO.getSubjectName())){
+                    addedSubjects.add(gradeDTO.getSubjectName());
+                    subjectRepo.save(subjectMapper.toEntity(gradeDTO));
                 }
                 grades.add(addGrade(gradeDTO, student));
             }
-            if (i % 2000 == 0 || i == studentList.size()-1) {
+            if (currentStudent % 2000 == 0 || currentStudent == studentList.size()-1) {
                 studentRepo.saveAll(students);
                 studentRepo.flush();
                 students.clear();
@@ -65,40 +77,23 @@ public class InsertionService {
     }
 
     @Transactional
-    public Student addStudentWithGrades(StudentWithGradesDTO studentDTO) {
+    public void addStudentWithGrades(CreateStudentWithGradesRequestDTO studentDTO) {
 
-        Student student = addStudent(studentDTO);
+        Student student = studentMapper.toEntity(studentDTO);
         studentRepo.save(student);
 
         List<GradeDTO> gradeDTOs = studentDTO.getGrades();
         for (GradeDTO gradeDTO : gradeDTOs) {
-            subjectRepo.save(addSubject(gradeDTO));
+            subjectRepo.save(subjectMapper.toEntity(gradeDTO));
             gradeRepo.save(addGrade(gradeDTO, student));
         }
 
-        return student;
     }
 
-    private Student addStudent(StudentWithGradesDTO studentDTO){
-        var student = new Student();
-        student.setLastName(studentDTO.getLastName());
-        student.setFirstName(studentDTO.getFirstName());
-        student.setAge(studentDTO.getAge());
-        student.setGroupNumber(studentDTO.getGroupNumber());
-
-        return student;
-    }
-
-    private Subject addSubject(GradeDTO gradeDTO) {
-        var subject = new Subject();
-        subject.setSubjectName(gradeDTO.getSubjectName());
-
-        return subject;
-    }
 
     private Grade addGrade(GradeDTO gradeDTO, Student student) {
 
-        var grade = new Grade();
+        Grade grade = new Grade();
         grade.setId(new GradeId(student.getId(), gradeDTO.getSubjectName()));
         grade.setGrade(gradeDTO.getGrade());
         grade.setStudent(student);

@@ -35,37 +35,17 @@ paths:
           content:
             application/json:
               example: []
-  /grades/student/{studentId}/subject/{subjectName}:
+  /grades/update:
     put:
+      tags:
+      - Оценки
       summary: Обновить оценку ученика
-      parameters:
-      - name: studentId
-        in: path
-        description: Идентификатор ученика
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateGradeRequestDTO'
         required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-          example: 12343
-      - name: subjectName
-        in: path
-        description: Название предмета
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          example: rus
-      - name: newGrade
-        in: query
-        description: Новая оценка
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: integer
-          example: 5
       responses:
         "200":
           description: Успешное обновление
@@ -136,3 +116,19 @@ components:
         averageGrade:
           type: number
           example: 4.75
+    UpdateGradeRequestDTO:
+      required:
+      - newGrade
+      - studentId
+      - subjectName
+      type: object
+      properties:
+        studentId:
+          type: integer
+          example: 12343
+        subjectName:
+          type: string
+          example: rus
+        newGrade:
+          type: integer
+          example: 5

@@ -1,6 +1,8 @@
 package com.rtk.services;
 
-import com.rtk.dto.AverageGradeDTO;
+import com.rtk.dto.AverageGradeResponseDTO;
+import com.rtk.dto.GradeDTO;
+import com.rtk.dto.UpdateGradeRequestDTO;
 import com.rtk.entity.Grade;
 import com.rtk.entity.GradeId;
 import com.rtk.entity.Student;
@@ -16,39 +18,24 @@ public class GradeService {
     @Autowired
     private GradeRepo gradeRepo;
 
-    public List<AverageGradeDTO> getAverageGradesByGroup(int groupNumber) {
-
-        List<AverageGradeDTO> averageGrades = new ArrayList<>();
-
-        List<Grade> grades = gradeRepo.findByStudent_GroupNumber(groupNumber);
-
-        // вычисление средних оценок для каждого ученика
-        Map<Student, Double> averageGradeMap = new HashMap<>();
-        for (Grade grade : grades) {
-            Student student = grade.getStudent();
-            double currentAverage = averageGradeMap.getOrDefault(student, 0.0);
-            currentAverage += grade.getGrade();
-            averageGradeMap.put(student, currentAverage);
+    public List<AverageGradeResponseDTO> getAverageGradesByGroup(int groupNumber) throws NoSuchElementException {
+        List<AverageGradeResponseDTO> avgGrades  = gradeRepo.calculateAverageGradesByGroup(groupNumber);
+        if (!avgGrades.isEmpty()){
+            return gradeRepo.calculateAverageGradesByGroup(groupNumber);
+        } else {
+            throw new NoSuchElementException("Не найдено учеников с оценками в указанной группе");
         }
-
-        for (Map.Entry<Student, Double> entry : averageGradeMap.entrySet()) {
-            Student student = entry.getKey();
-            double averageGrade = entry.getValue() / student.getGrades().size();
-            averageGrades.add(new AverageGradeDTO(student.getId(), student.getFirstName(), student.getLastName(), averageGrade));
-        }
-
-        return averageGrades;
     }
 
-    public void updateGrade(int studentId, String subjectName, int newGrade) {
-        Optional<Grade> optionalGrade = gradeRepo.findById(new GradeId(studentId, subjectName));
+    public void updateGrade(UpdateGradeRequestDTO updateGradeRequestDTO) throws NoSuchElementException {
+        Optional<Grade> optionalGrade = gradeRepo.findById(new GradeId(updateGradeRequestDTO.getStudentId(), updateGradeRequestDTO.getSubjectName()));
 
         if (optionalGrade.isPresent()) {
             Grade grade = optionalGrade.get();
-            grade.setGrade(newGrade);
+            grade.setGrade(updateGradeRequestDTO.getNewGrade());
             gradeRepo.save(grade);
         } else {
-            throw new NoSuchElementException();
+            throw new NoSuchElementException("Не найден ученик или предмет с указанной оценкой");
         }
     }
 }

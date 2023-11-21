@@ -1,9 +1,8 @@
 package com.rtk.controller;
 
-import com.rtk.dto.StudentWithGradesDTO;
+import com.rtk.dto.CreateStudentWithGradesRequestDTO;
 import com.rtk.services.InsertionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,13 +24,9 @@ public class InsertionController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<String> addStudentWithGrades(@RequestBody StudentWithGradesDTO studentDTO) {
-        try {
-            insertionService.addStudentWithGrades(studentDTO);
-            return ResponseEntity.ok().body("Студент добавлен в БД");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatusCode.valueOf(500)).body("Ошибка при добавлении студента: " + e.getMessage());
-        }
+    public ResponseEntity<String> addStudentWithGrades(@RequestBody CreateStudentWithGradesRequestDTO studentDTO) {
+        insertionService.addStudentWithGrades(studentDTO);
+        return ResponseEntity.ok().body("Студент добавлен в БД");
     }
 }
 

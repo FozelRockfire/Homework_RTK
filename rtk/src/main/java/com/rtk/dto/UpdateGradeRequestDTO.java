@@ -9,10 +9,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AverageGradeDTO {
-    private int studentId;
-    private String firstName;
-    private String lastName;
-    private double averageGrade;
-}
+public class UpdateGradeRequestDTO {
 
+    private int studentId;
+    private String subjectName;
+    private int newGrade;
+
+}
